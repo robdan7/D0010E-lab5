@@ -1,7 +1,11 @@
 package simulator;
+
+import simulator.queue.EventQueue;
+import simulator.modifiers.Event;
+
 /**
  * 
- * @author Chonratid Pangdee, Anton Johansson, Ronbin Danielsson & Zerophymyr Falk
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson & Zerophymyr Falk
  *
  */
 public class Simulator {
@@ -22,6 +26,6 @@ public class Simulator {
 	 * @param start start event
 	 */
 	public void run(Event start) {
-		
+
 	}
 }
