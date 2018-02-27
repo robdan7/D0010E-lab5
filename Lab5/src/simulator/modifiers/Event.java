@@ -9,16 +9,23 @@ import simulator.queue.SortedItem;
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
-public abstract class Event implements SortedItem{
+public abstract class Event implements SortedItem {
+	float time;
+
+	Event(float time) {
+		this.time = time;
+	}
 
 	public float getTime() {
-		return 0;
+		return time;
 	}
 
 	@Override
 	public boolean largerThan(SortedItem item) throws ClassCastException {
-		return true;
+		if (!(item instanceof Event))
+			throw new ClassCastException();
+		return ((Event) item).getTime() > this.getTime();
 	}
-	
-	public abstract void run(EventQueue eventQueue, State state);
+
+	public abstract void action(EventQueue eventQueue, State state);
 }

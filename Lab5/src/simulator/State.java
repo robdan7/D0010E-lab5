@@ -2,6 +2,8 @@ package simulator;
 
 import java.util.*;
 import simulator.modifiers.Event;
+import simulator.modifiers.OpeningEvent;
+import simulator.queue.EventQueue;
 
 /**
  * 
@@ -11,13 +13,14 @@ import simulator.modifiers.Event;
 public class State extends Observable {
 	private boolean flag; // emergency break
 	private float time;	// Event-time
+	private EventQueue eventQueue;
 	
 	/**
 	 * Constructor State that creates the state
 	 */
 	public State() {
 		setFlag(false);
-		time = new Event().getTime();
+		time = new OpeningEvent(eventQueue).getTime();
 	}
 	
 	/*
@@ -25,7 +28,7 @@ public class State extends Observable {
 	 * 
 	 * @param boolean True if simulator is to be terminated
 	 */
-	void setFlag(boolean f) {
+	public void setFlag(boolean f) {
 		flag = f;
 		setChanged();
 		notifyObservers();
