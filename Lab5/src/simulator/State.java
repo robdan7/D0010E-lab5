@@ -2,6 +2,7 @@ package simulator;
 
 import java.util.*;
 import simulator.modifiers.Event;
+import simulator.queue.EventQueue;
 
 /**
  * 
@@ -17,7 +18,7 @@ public class State extends Observable {
 	 */
 	public State() {
 		setFlag(false);
-		time = new Event().getTime();
+		time = new StateEvent().getTime();
 	}
 	
 	/*
@@ -27,12 +28,27 @@ public class State extends Observable {
 	 */
 	void setFlag(boolean f) {
 		flag = f;
-		setChanged();
-		notifyObservers();
 	}
 	
 	boolean getFlag() {
 		return flag;
 	}
 	
+	/**
+	 * Notify method that can be called from other classes.
+	 */
+	public void observers() {
+		setChanged();
+		notifyObservers();
+	}
+	
+	
+	/*
+	 * Private inner class inherit Event
+	 */
+	private class StateEvent extends Event{
+		
+		@Override
+		public void run(EventQueue eventQueue, State state) {	}
+	}
 }
