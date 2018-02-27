@@ -5,7 +5,7 @@ import simulator.modifiers.Event;
 
 /**
  * 
- * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson & Zerophymyr Falk
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
 public class State extends Observable {
