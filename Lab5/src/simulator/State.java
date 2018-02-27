@@ -1,10 +1,11 @@
 package simulator;
 
 import java.util.*;
+import simulator.modifiers.Event;
 
 /**
  * 
- * @author Chonratid Pangdee, Anton Johansson, Ronbin Danielsson & Zerophymyr Falk
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
 public class State extends Observable {
