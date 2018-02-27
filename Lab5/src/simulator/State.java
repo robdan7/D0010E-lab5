@@ -2,7 +2,10 @@ package simulator;
 
 import java.util.*;
 import simulator.modifiers.Event;
+<<<<<<< HEAD
 import simulator.modifiers.OpeningEvent;
+=======
+>>>>>>> branch 'master' of ssh://git@github.com/robdan7/D0010E-lab5.git
 import simulator.queue.EventQueue;
 
 /**
@@ -30,12 +33,27 @@ public class State extends Observable {
 	 */
 	public void setFlag(boolean f) {
 		flag = f;
-		setChanged();
-		notifyObservers();
 	}
 	
 	boolean getFlag() {
 		return flag;
 	}
 	
+	/**
+	 * Notify method that can be called from other classes.
+	 */
+	public void observers() {
+		setChanged();
+		notifyObservers();
+	}
+	
+	
+	/*
+	 * Private inner class inherit Event
+	 */
+	private class StateEvent extends Event{
+		
+		@Override
+		public void run(EventQueue eventQueue, State state) {	}
+	}
 }

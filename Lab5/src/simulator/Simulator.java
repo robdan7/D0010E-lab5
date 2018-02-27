@@ -21,11 +21,13 @@ public class Simulator {
 	}
 	
 	/**
-	 * Runs the simulator
+	 * Runs the simulator. Will keep running while EventQuee is not empty.
 	 * 
 	 * @param start start event
 	 */
 	public void run(Event start) {
-
+		while (!queue.isEmpty()  && !this.state.getFlag()) {
+			queue.nextEvent(this.state);
+		}
 	}
 }
