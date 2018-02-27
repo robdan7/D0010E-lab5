@@ -1,31 +1,69 @@
 package simulator.queue;
 
+/**
+ * 
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ *
+ */
 public abstract class QUEUE<E> {
 	private final Node<E> start;
-	private int length = 0;
 
-	QUEUE() {
-		this.start = new Node<E>(null);
+	protected final Node<E> getFirst() {
+		return this.start;
 	}
 	
+	/**
+	 * Initiate the first node with a desired instance.
+	 * @param n - The node to store locally.
+	 */
+	public QUEUE(Node<E> n) {
+		this.start = n;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @throws IndexOutOfBoundsException
+	 */
 	protected final E removeFirst() throws IndexOutOfBoundsException {
 		if (this.isEmpty()) {
 			throw new IndexOutOfBoundsException();
 		}
-		Node<E> n = this.start.getNext();
-		this.start.removeNext();
-		return n.getItem();
+		return this.start.removeNext();
 	}
 
-	public abstract E next();
-
-	public abstract void add(E item);
-
+	/**
+	 * 
+	 * @return <b>true</b> if this queue is empty, <b>false</b> if not.
+	 */
 	public boolean isEmpty() {
 		return !this.start.hasNext();
 	}
 
-	public int size() {
-		return this.length;
-	}
+	/**
+	 * Pull the next item from the queue. The pulled item will no longer exist as an
+	 * item internally.
+	 * 
+	 * @return The next item in order.
+	 */
+	public abstract E next();
+
+	/**
+	 * Add an item to the queue.
+	 * 
+	 * @param item
+	 *            - The generic item to add.
+	 */
+	public abstract void add(E item);
+
+	/**
+	 * Get the current size of this queue. The size is 0 if no items have been
+	 * added.
+	 * 
+	 * @return - The queue size.
+	 */
+	public abstract int size();
+	
+	@Override
+	public abstract String toString();
 }
