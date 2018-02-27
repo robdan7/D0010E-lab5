@@ -1,5 +1,7 @@
 package simulator.modifiers;
 
+import simulator.State;
+import simulator.queue.EventQueue;
 import simulator.queue.SortedItem;
 
 /**
@@ -18,5 +20,5 @@ public abstract class Event implements SortedItem{
 		return true;
 	}
 	
-	public abstract void run();
+	public abstract void run(EventQueue eventQueue, State state);
 }
