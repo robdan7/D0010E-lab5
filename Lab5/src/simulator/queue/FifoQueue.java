@@ -2,7 +2,6 @@ package simulator.queue;
 
 public class FifoQueue<E> extends QUEUE<E>{
 	private Node<E> last;
-	private int size = 0;
 	
 	public FifoQueue() {
 		super(new Node<E>(null));
