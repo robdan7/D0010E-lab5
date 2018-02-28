@@ -7,7 +7,7 @@ import simulator.queue.EventQueue;
 public class ShutdownEvent extends Event {
 	
 	ShutdownEvent(float time){
-		this.time=time;
+		super(time);
 	}
 
 	@Override

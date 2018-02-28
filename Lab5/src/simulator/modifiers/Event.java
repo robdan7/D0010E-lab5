@@ -10,9 +10,9 @@ import simulator.queue.SortedItem;
  *
  */
 public abstract class Event implements SortedItem {
-	float time;
+	private float time;
 
-	Event(float time) {
+	protected Event(float time) {
 		this.time = time;
 	}
 

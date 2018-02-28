@@ -12,7 +12,7 @@ public class QueueEvent extends CustomerEvent {
 
 	@Override
 	public void action(EventQueue eventQueue, State state) {
-		eventQueue.addEvent(new CheckoutEvent(customer));
+		eventQueue.addEvent(new CheckoutEvent(customer,5.0f/*Time to checkout*/));
 	}
 	
 }

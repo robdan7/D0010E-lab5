@@ -5,8 +5,8 @@ import simulator.queue.EventQueue;
 
 public class CheckoutEvent extends CustomerEvent {
 
-	CheckoutEvent(Customer c) {
-		super(c,5.0f);
+	CheckoutEvent(Customer c,float time) {
+		super(c,time);
 	}
 
 	@Override

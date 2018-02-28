@@ -22,7 +22,7 @@ public class State extends Observable {
 	 */
 	public State() {
 		setFlag(false);
-		time = new OpeningEvent(eventQueue).getTime();
+		time = new StateEvent(0).getTime();
 	}
 	
 	/*
@@ -52,7 +52,12 @@ public class State extends Observable {
 	 */
 	private class StateEvent extends Event{
 		
+		protected StateEvent(float time) {
+			super(time);
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
-		public void run(EventQueue eventQueue, State state) {	}
+		public void action(EventQueue eventQueue, State state) {	}
 	}
 }
