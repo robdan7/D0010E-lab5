@@ -1,6 +1,7 @@
-package simulator.modifiers;
+package market.modifiers;
 
 import simulator.State;
+import simulator.modifiers.Event;
 import simulator.queue.EventQueue;
 
 public class ClosingEvent extends Event {

@@ -1,6 +1,6 @@
-package simulator.modifiers;
+package market.modifiers;
 
-
+import simulator.modifiers.Event;
 
 public abstract class CustomerEvent extends Event {
 	Customer customer;

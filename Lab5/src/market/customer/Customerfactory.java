@@ -1,4 +1,4 @@
-package labar;
+package market.customer;
 /**
 	 * 
 	 * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk

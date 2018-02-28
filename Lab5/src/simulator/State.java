@@ -1,11 +1,10 @@
 package simulator;
 
 import java.util.*;
+
+import market.modifiers.OpeningEvent;
 import simulator.modifiers.Event;
-<<<<<<< HEAD
-import simulator.modifiers.OpeningEvent;
-=======
->>>>>>> branch 'master' of ssh://git@github.com/robdan7/D0010E-lab5.git
+//git@github.com/robdan7/D0010E-lab5.git
 import simulator.queue.EventQueue;
 
 /**
