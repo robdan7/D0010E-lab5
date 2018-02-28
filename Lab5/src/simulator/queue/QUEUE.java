@@ -47,7 +47,7 @@ public abstract class QUEUE<E> {
 	 * 
 	 * @return The next item in order.
 	 */
-	public abstract E next();
+	public abstract E next() throws NullPointerException;
 
 	/**
 	 * Add an item to the queue.
