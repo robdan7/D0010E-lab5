@@ -11,7 +11,7 @@ public class Checkout {
 		this.isUsed = true;
 	}
 	
-	boolean isUsed() {
+	public boolean isUsed() {
 		return this.isUsed;
 	}
 	
