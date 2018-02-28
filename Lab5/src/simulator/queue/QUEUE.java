@@ -7,6 +7,7 @@ package simulator.queue;
  */
 public abstract class QUEUE<E> {
 	private final Node<E> start;
+	private int size = 0;
 
 	protected final Node<E> getFirst() {
 		return this.start;
@@ -62,7 +63,17 @@ public abstract class QUEUE<E> {
 	 * 
 	 * @return - The queue size.
 	 */
-	public abstract int size();
+	public int size() {
+		return this.size;
+	}
+	
+	protected void addSize() {
+		this.size++;
+	}
+	
+	protected void subtractSize() {
+		this.size--;
+	}
 	
 	@Override
 	public abstract String toString();
