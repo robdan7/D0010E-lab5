@@ -12,7 +12,10 @@ class SortedQueue<E extends SortedItem> extends QUEUE<E>{
 	}
 
 	@Override
-	public E next() {
+	public E next() throws NullPointerException{
+		if (this.isEmpty()) {
+			throw new NullPointerException();
+		}
 		E item = super.removeFirst();
 		super.subtractSize();
 		return item;
@@ -27,6 +30,9 @@ class SortedQueue<E extends SortedItem> extends QUEUE<E>{
 
 	@Override
 	public String toString() {
+		if (this.isEmpty()) {
+			return "";
+		}
 		return super.getFirst().getNext().toString();
 	}
 }

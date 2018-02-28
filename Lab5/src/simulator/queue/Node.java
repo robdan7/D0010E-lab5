@@ -37,7 +37,7 @@ class Node<E> {
 	 * 
 	 * @return - The generic item of this node.
 	 */
-	protected E getItem() {
+	E getItem() {
 		return this.item;
 	}
 
@@ -46,10 +46,11 @@ class Node<E> {
 	 * 
 	 * @return - Generic item. <b>Null</b> is returned if the next node does not
 	 *         exist or does not contain an item.
+	 * @throws NullPointerException The next node does not exist.
 	 */
-	public E removeNext() {
+	public E removeNext() throws NullPointerException{
 		if (this.getNext() == null) {
-			return null;
+			throw new NullPointerException();
 		}
 		Node<E> n = this.getNext();
 		this.next = this.getNext().getNext();
