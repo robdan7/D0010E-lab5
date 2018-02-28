@@ -14,7 +14,7 @@ public class OpeningEvent extends Event {
 	@Override
 	public void action(EventQueue eventQueue, State state) {
 		eventQueue.addEvent(new ClosingEvent(10f/*Time Open*/));
-		eventQueue.addEvent(new ArrivalEvent(new Customer()/*New Customer*/,2/*Time till first Customer*/));
+		eventQueue.addEvent(new ArrivalEvent(new Customer()/*New Customer*/,this.getTime()+2/*Time till first Customer*/));
 	}
 
 }

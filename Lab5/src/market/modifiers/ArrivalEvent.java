@@ -12,8 +12,8 @@ public class ArrivalEvent extends CustomerEvent {
 	@Override
 	public void action(EventQueue eventQueue, State state) {
 		eventQueue.addEvent(new QueueEvent(customer, state));
-		if(true/*store not Closed*/) {
-			eventQueue.addEvent(new ArrivalEvent(new Customer()/*New Customer*/,2/*Next Customer time*/));
+		if(true/*store not Closed and Store not full*/) {
+			eventQueue.addEvent(new ArrivalEvent(new Customer()/*New Customer*/,this.getTime()+2/*Next Customer time*/));
 		}
 	}
 }
