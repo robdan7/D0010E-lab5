@@ -16,6 +16,7 @@ public class Simulator {
 	private ExponentialRandomStream expRand;
 	private UniformRandomStream uniRand;
 	private long seed;
+
 	
 	/**
 	 * Constructor that creates simulator
@@ -26,6 +27,7 @@ public class Simulator {
 		this.seed = seed;
 		expRand = new ExponentialRandomStream(seed);
 		uniRand = new UniformRandomStream(lowerbound, upperbound, seed);
+		View view = new View(state);
 	}
 	
 	/**
