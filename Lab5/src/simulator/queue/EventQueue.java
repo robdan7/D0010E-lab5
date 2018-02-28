@@ -32,6 +32,6 @@ public class EventQueue {
 	 * @param state - The state to modify.
 	 */
 	public void nextEvent(State state) {
-		this.queue.next().run(this, state);
+		this.queue.next().action(this, state);
 	}
 }
