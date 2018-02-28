@@ -1,4 +1,4 @@
-package simulator.modifiers;
+package market.modifiers;
 
 import simulator.State;
 import simulator.queue.EventQueue;
