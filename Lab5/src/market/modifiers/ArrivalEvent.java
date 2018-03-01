@@ -12,6 +12,7 @@ import simulator.queue.QUEUE;
 public class ArrivalEvent extends Event {
 	private Customerfactory factory;
 	private QUEUE<Customer> customerQueue;
+	private Customer customer;
 
 	/**
 	 * Create the first arrivalEvent for new customers.
@@ -33,6 +34,7 @@ public class ArrivalEvent extends Event {
 	private ArrivalEvent(Customerfactory factory, QUEUE<Customer> checkoutQueue, double time) {
 		super(time);
 		this.factory = factory;
+		this.customer = this.factory.newcustomer();
 		this.customerQueue = checkoutQueue;
 	}
 
@@ -43,28 +45,25 @@ public class ArrivalEvent extends Event {
 		eventQueue.addEvent(new QueueEvent(this.factory.newcustomer(), this.customerQueue,
 				((MarketState) state).nextToQueueTime(super.getTime())));
 		if (((MarketState) state).isOpen()) {
-			eventQueue.addEvent(new ArrivalEvent(this.factory, this.customerQueue,
-					((MarketState) state).nextArrivalTime(super.getTime())));
+			// Create a new arrival event for the next customer.
+			double t = ((MarketState) state).nextArrivalTime(super.getTime()); // The time to arrive.
+			
+			// Create the next arrival event.
+			eventQueue.addEvent(new ArrivalEvent(this.factory, this.customerQueue, t));
+			
+			// See if the market if full or not.
 			if (!((MarketState)state).marketIsFull()) {
 				((MarketState) state).addCustomer();
+				
+				// The time until the customer is at the queue.
+				t = ((MarketState)state).nextToQueueTime(super.getTime());
+				
+				// Add this customer to the ckeckout queue.
+				eventQueue.addEvent(new QueueEvent(this.customer, customerQueue, t));
+			} else {
+				// The market is full. We lost a customer.
+				((MarketState)state).addMissedCustomer();
 			}
 		}
 	}
-}
-
-class EventCreationException extends Exception {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	EventCreationException() {
-		this("");
-	}
-
-	EventCreationException(String s) {
-		super(s);
-	}
-
 }

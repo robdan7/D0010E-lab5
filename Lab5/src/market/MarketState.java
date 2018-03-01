@@ -16,7 +16,7 @@ public class MarketState extends State {
 	private UniformRandomStream checkoutTime;
 	private UniformRandomStream untilQueueTime;
 	private int seed;
-	private int maxCustomers;
+	private int maxCustomers, totalCustomers, missedCustomers;
 	
 	private int customersInside = 0;
 	
@@ -39,6 +39,15 @@ public class MarketState extends State {
 	
 	public void addCustomer() {
 		this.customersInside++;
+		this.totalCustomers++;
+	}
+	
+	public int getTotalCustomers() {
+		return this.totalCustomers;
+	}
+	
+	public void addMissedCustomer() {
+		this.missedCustomers++;
 	}
 	
 	public void customerLeaves() throws Exception{
