@@ -7,7 +7,9 @@ package market.customer;
 public class Customer {
 
 	private final int customerid;
-	float timeinqueue; //
+	double timeinqueue;
+	double queueArrival;
+	
 	/**
 	 * @param customerID
 	 */
@@ -20,5 +22,33 @@ public class Customer {
 	 */
 	public int ID() {
 		return customerid;
+	}
+	
+	public double getTimeInQueue() {
+		return this.timeinqueue;
+	}
+	
+	/**
+	 * Invoke this when a customer arrives at the queue.
+	 * @param time
+	 */
+	public void arriveToQueue(double time) {
+		this.queueArrival = time;
+	}
+	
+	/**
+	 * Invoke this when a customer has left the queue.
+	 * @param time - The current time.
+	 */
+	public void leaveQueue(double time) {
+		this.timeinqueue = time-this.queueArrival;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Customer) {
+			throw new IllegalArgumentException();
+		}
+		return this.ID() == ((Customer)o).ID();
 	}
 }

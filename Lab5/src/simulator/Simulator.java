@@ -36,7 +36,10 @@ public class Simulator {
 	 * @param start start event
 	 */
 	public void run(Event start) {
-		while (!queue.isEmpty()  && !this.state.getFlag()) {
+		while (this.state.getFlag()) {
+			if (this.queue.isEmpty()) {
+				throw new IndexOutOfBoundsException("No ending event has been added!");
+			}
 			queue.nextEvent(this.state);
 		}
 	}

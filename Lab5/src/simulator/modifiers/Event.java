@@ -10,13 +10,13 @@ import simulator.queue.SortedItem;
  *
  */
 public abstract class Event implements SortedItem {
-	private float time;
+	private double time;
 
-	protected Event(float time) {
+	protected Event(double time) {
 		this.time = time;
 	}
 
-	public float getTime() {
+	public double getTime() {
 		return time;
 	}
 

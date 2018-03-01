@@ -7,13 +7,13 @@ package market.customer;
 	 */
 public class Customerfactory {
 	
-	private static int customersnumber = 0; //counter
+	private int customersnumber = 0; //counter
 	
 	/**
 	 * 	
 	 * @return this method will return a new customer object with a unique ID.
 	 */
-	protected Customer newcustomer(){
+	public Customer newcustomer(){
 		customersnumber++;
 		return new Customer(customersnumber);
 	}

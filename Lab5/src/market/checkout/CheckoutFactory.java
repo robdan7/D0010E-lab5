@@ -24,15 +24,17 @@ public class CheckoutFactory {
 	
 	/**
 	 * Request a checkout for a customer. The checkout is then set to used.
+	 * @param time - The current time.
 	 * @return E checkout. <b>null</b> is returned if all checkouts are used.
+	 * @throws NullPointerException - All checkouts are used.
 	 */
-	public Checkout requestCheckout() {
+	public Checkout requestCheckout(double time) throws NullPointerException{
 		for (Checkout c : this.checkouts) {
 			if (!c.isUsed()) {
-				c.setUsed();
+				c.setUsed(time);
 				return c;
 			}
 		}
-		return null;
+		throw new NullPointerException();
 	}
 }

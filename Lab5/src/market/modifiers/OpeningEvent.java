@@ -1,20 +1,48 @@
 package market.modifiers;
 
+import market.MarketState;
 import simulator.State;
 import simulator.modifiers.Event;
 import simulator.queue.EventQueue;
 
 public class OpeningEvent extends Event {
+	private double closingTime, endOfWorldTime;
 
-	public OpeningEvent(EventQueue eventQueue) {
+	/**
+	 * Create the starting event of the market. This events will create one arrival
+	 * event, one closing event and one event for exiting the simulation.
+	 * 
+	 * @param eventQueue
+	 *            - The eventQueue to use.
+	 * @param closingTime
+	 *            - Closing time for the market.
+	 * @param endOfWorldTime
+	 *            - Time when the simulation ends.
+	 */
+	public OpeningEvent(EventQueue eventQueue, double closingTime, double endOfWorldTime) {
 		super(0);
-		
+		this.closingTime = closingTime;
+		this.endOfWorldTime = endOfWorldTime;
 	}
 
 	@Override
 	public void action(EventQueue eventQueue, State state) {
-		eventQueue.addEvent(new ClosingEvent(10f/*Time Open*/));
-		eventQueue.addEvent(new ArrivalEvent(new Customer()/*New Customer*/,2/*Time till first Customer*/));
+		if ((state instanceof MarketState)) {
+			throw new ClassCastException();
+		}
+		((MarketState) state).setOpen();
+		eventQueue.addEvent(new ClosingEvent(this.closingTime));
+		eventQueue.addEvent(new ArrivalEvent(((MarketState) state).nextArrivalTime(super.getTime())));
+
+		// Break event.
+		eventQueue.addEvent(new Event(this.endOfWorldTime) {
+
+			@Override
+			public void action(EventQueue eventQueue, State state) {
+				((MarketState) state).endState();
+			}
+
+		});
 	}
 
 }
