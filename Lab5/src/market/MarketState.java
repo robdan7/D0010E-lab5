@@ -16,19 +16,25 @@ public class MarketState extends State {
 	private UniformRandomStream checkoutTime;
 	private UniformRandomStream untilQueueTime;
 	private int seed;
+	private int maxCustomers;
 	
 	private int customersInside = 0;
 	
 	private boolean isOpen = false;
 	
-	public MarketState(int arrivalTime, int checkoutTime, int pickingTime, int seed) {
+	public MarketState(int maxCustomers, int arrivalTime, int checkoutTime, int pickingTime, int seed) {
 		this.checkoutQueue = new FifoQueue<Customer>();
 		this.customerArrivalTime = new ExponentialRandomStream(arrivalTime, seed);
 		this.checkoutTime = new UniformRandomStream(pickingTime, seed);
 		this.untilQueueTime = new UniformRandomStream(checkoutTime, seed);
 		this.checkouts = new CheckoutFactory(seed);
 		
+		this.maxCustomers = maxCustomers;
 		this.seed = seed;
+	}
+	
+	public boolean marketIsFull() {
+		return this.maxCustomers == this.customersInside;
 	}
 	
 	public void addCustomer() {

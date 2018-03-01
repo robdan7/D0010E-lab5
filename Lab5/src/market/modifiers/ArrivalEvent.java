@@ -45,7 +45,9 @@ public class ArrivalEvent extends Event {
 		if (((MarketState) state).isOpen()) {
 			eventQueue.addEvent(new ArrivalEvent(this.factory, this.customerQueue,
 					((MarketState) state).nextArrivalTime(super.getTime())));
-			((MarketState) state).addCustomer();
+			if (!((MarketState)state).marketIsFull()) {
+				((MarketState) state).addCustomer();
+			}
 		}
 	}
 }
