@@ -12,5 +12,5 @@ public interface SortedItem {
 	 * @return <b>true</b> if this instance has a higher priority. <b>false</b> if it is equal or less.
 	 * @throws ClassCastException The other item is not an instance of this class.
 	 */
-	boolean largerThan(SortedItem item) throws ClassCastException;
+	boolean higherPriority(SortedItem item) throws ClassCastException;
 }

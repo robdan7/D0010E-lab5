@@ -21,9 +21,10 @@ public abstract class Event implements SortedItem {
 	}
 
 	@Override
-	public boolean largerThan(SortedItem item) throws ClassCastException {
-		if (!(item instanceof Event))
+	public boolean higherPriority(SortedItem item) throws ClassCastException {
+		if (!(item instanceof Event)) {
 			throw new ClassCastException();
+		}
 		return ((Event) item).getTime() > this.getTime();
 	}
 
