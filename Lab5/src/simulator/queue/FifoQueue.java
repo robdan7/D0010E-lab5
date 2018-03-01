@@ -2,7 +2,6 @@ package simulator.queue;
 
 public class FifoQueue<E> extends QUEUE<E>{
 	private Node<E> last;
-	private int size = 0;
 	
 	public FifoQueue() {
 		super(new Node<E>(null));
@@ -10,9 +9,16 @@ public class FifoQueue<E> extends QUEUE<E>{
 	}
 
 	@Override
-	public E next() {
+	public E next() throws NullPointerException{
+		if (this.isEmpty()) {
+			throw new NullPointerException();
+		}
+		if (super.getFirst().getNext().equals(this.last)) {
+			this.last = super.getFirst();
+		}
 		E item = super.getFirst().removeNext();
 		super.subtractSize();
+		
 		return item;
 	}
 
@@ -25,6 +31,9 @@ public class FifoQueue<E> extends QUEUE<E>{
 
 	@Override
 	public String toString() {
-		return super.getFirst().toString();
+		if (this.isEmpty()) {
+			return "";
+		}
+		return super.getFirst().getNext().toString();
 	}
 }

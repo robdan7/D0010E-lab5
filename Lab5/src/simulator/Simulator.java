@@ -1,6 +1,7 @@
 package simulator;
 
 import simulator.queue.EventQueue;
+import simulator.queue.QUEUE;
 import simulator.modifiers.Event;
 
 import simulator.stream.*;
@@ -13,28 +14,44 @@ import simulator.stream.*;
 public class Simulator {
 	private EventQueue queue; // Event queue
 	private final State state; // Current state
+	@Deprecated
 	private ExponentialRandomStream expRand;
+	@Deprecated
 	private UniformRandomStream uniRand;
+	@Deprecated
 	private long seed;
+
 	
 	/**
-	 * Constructor that creates simulator
+	 * Create a general simulator.
+	 * @param state - The state to use.
+	 * @param eventQueue - The eventQueue to use.
+	 * @param startEvent - The start event.
+	 * @param lowerbound - ?
+	 * @param upperbound - ?
+	 * @param seed - ?
 	 */
-	public Simulator(double lowerbound, double upperbound, long seed) {
-		state = new State();
-		queue = new EventQueue();
+	public Simulator(State state, EventQueue eventQueue, Event startEvent, double lowerbound, double upperbound, long seed) {
+		this.state = state;
+		queue = eventQueue;
+		queue.addEvent(startEvent);
 		this.seed = seed;
 		expRand = new ExponentialRandomStream(seed);
 		uniRand = new UniformRandomStream(lowerbound, upperbound, seed);
+		View view = new View(state);
 	}
 	
 	/**
-	 * Runs the simulator. Will keep running while EventQuee is not empty.
+	 * Runs the simulator. It will keep running while the state is active.
 	 * 
 	 * @param start start event
+	 * @throws IndexOutOfBoundsException - The queue has no more elements.
 	 */
-	public void run(Event start) {
-		while (!queue.isEmpty()  && !this.state.getFlag()) {
+	public void run(Event start) throws IndexOutOfBoundsException{
+		while (this.state.getFlag()) {
+			if (this.queue.isEmpty()) {
+				throw new IndexOutOfBoundsException("No ending event has been added!");
+			}
 			queue.nextEvent(this.state);
 		}
 	}

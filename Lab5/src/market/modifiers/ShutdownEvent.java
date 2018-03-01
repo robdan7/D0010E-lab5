@@ -4,6 +4,7 @@ import simulator.State;
 import simulator.modifiers.Event;
 import simulator.queue.EventQueue;
 
+@Deprecated
 public class ShutdownEvent extends Event {
 	
 	ShutdownEvent(float time){
@@ -12,7 +13,7 @@ public class ShutdownEvent extends Event {
 
 	@Override
 	public void action(EventQueue eventQueue, State state) {
-		state.setFlag(true);
+		state.endState();
 	}
 
 }

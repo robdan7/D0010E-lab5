@@ -14,27 +14,31 @@ import simulator.queue.EventQueue;
  */
 public class State extends Observable {
 	private boolean flag; // emergency break
-	private float time;	// Event-time
+	@Deprecated
+	private double time;	// Event-time'
+	
 	private EventQueue eventQueue;
 	
 	/**
 	 * Constructor State that creates the state
 	 */
 	public State() {
-		setFlag(false);
-		time = new StateEvent(0).getTime();
+		this.flag = true;
+		time = new StateEvent(0).getTime(); // Where is this used?
 	}
 	
 	/*
-	 * Set flag
-	 * 
-	 * @param boolean True if simulator is to be terminated
+	 * Set this state to non-active.
 	 */
-	public void setFlag(boolean f) {
-		flag = f;
+	public void endState() {
+		flag = false;
 	}
 	
-	boolean getFlag() {
+	/**
+	 * Return the flag for this state. A state is active as long as the flag is true.
+	 * @return
+	 */
+	public boolean getFlag() {
 		return flag;
 	}
 	
@@ -50,6 +54,7 @@ public class State extends Observable {
 	/*
 	 * Private inner class inherit Event
 	 */
+	@Deprecated
 	private class StateEvent extends Event{
 		
 		protected StateEvent(float time) {

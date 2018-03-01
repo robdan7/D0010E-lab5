@@ -22,7 +22,7 @@ class SortedNode<E extends SortedItem> extends Node<E> {
 	Node<E> findLargerPriority(E item) {
 		if (!this.hasNext()) {
 			return this;
-		} else if (!((SortedItem) this.getNext().getItem()).largerThan(item)) {
+		} else if (!((SortedItem) this.getNext().getItem()).higherPriority(item)) {
 			return this;
 		} else {
 			return ((SortedNode<E>) this.getNext()).findLargerPriority(item);

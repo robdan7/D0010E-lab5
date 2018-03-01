@@ -10,20 +10,21 @@ import simulator.queue.SortedItem;
  *
  */
 public abstract class Event implements SortedItem {
-	private float time;
+	private double time;
 
-	protected Event(float time) {
+	protected Event(double time) {
 		this.time = time;
 	}
 
-	public float getTime() {
+	public double getTime() {
 		return time;
 	}
 
 	@Override
-	public boolean largerThan(SortedItem item) throws ClassCastException {
-		if (!(item instanceof Event))
+	public boolean higherPriority(SortedItem item) throws ClassCastException {
+		if (!(item instanceof Event)) {
 			throw new ClassCastException();
+		}
 		return ((Event) item).getTime() > this.getTime();
 	}
 
