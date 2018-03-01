@@ -3,6 +3,7 @@ package market.customer;
 
 /**
  * This class consists of a Customer object. Each Customer has its own unique ID.
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  */
 public class Customer {
 

@@ -5,6 +5,12 @@ import simulator.State;
 import simulator.modifiers.Event;
 import simulator.queue.EventQueue;
 
+/**
+ * This class is responsible for opening the market, creating new events, and
+ * creating the final events for the simulation.
+ * 
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ */
 public class OpeningEvent extends Event {
 	private double closingTime, endOfWorldTime;
 

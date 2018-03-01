@@ -4,7 +4,7 @@ import simulator.State;
 import simulator.modifiers.Event;
 
 /**
- * 
+ * This class contains all upcoming events in the simulator.
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */

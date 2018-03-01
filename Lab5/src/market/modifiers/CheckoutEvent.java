@@ -8,14 +8,28 @@ import simulator.modifiers.Event;
 import simulator.queue.EventQueue;
 import simulator.queue.QUEUE;
 
+/**
+ * This class represents a customer checkout. A checkout event is active as long
+ * as there are more customers in the queue. The chekout will close if the queue is empty.
+ * 
+ * @author Robin
+ *
+ */
 public class CheckoutEvent extends Event {
 	private Customer customer;
 	private Checkout checkout;
 	private QUEUE<Customer> customerQueue;
 
-	CheckoutEvent(Customer object, Checkout checkout, QUEUE<Customer> customerQueue, double d) {
-		super(d);
-		this.customer = object;
+	/**
+	 * Create a checkout event.
+	 * @param c - The customer
+	 * @param checkout - The checkout to use.
+	 * @param customerQueue - The customer queue to take more customers from.
+	 * @param time - The time a customer walks out.
+	 */
+	CheckoutEvent(Customer c, Checkout checkout, QUEUE<Customer> customerQueue, double time) {
+		super(time);
+		this.customer = c;
 		this.checkout = checkout;
 	}
 

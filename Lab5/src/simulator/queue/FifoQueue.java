@@ -1,5 +1,12 @@
 package simulator.queue;
 
+/**
+ * 
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ *
+ * @param <E>
+ */
+
 public class FifoQueue<E> extends QUEUE<E>{
 	private Node<E> last;
 	

@@ -9,6 +9,13 @@ import simulator.queue.EventQueue;
 import simulator.queue.FifoQueue;
 import simulator.queue.QUEUE;
 
+/**
+ * This class represents a customer walking to the checkout queue. The customer
+ * is either put in the queue or at a chekout if it is empty and at least one chekout is not used.
+ * 
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ *
+ */
 public class QueueEvent extends Event {
 	private Customer customer;
 	private QUEUE<Customer> customerQueue;
