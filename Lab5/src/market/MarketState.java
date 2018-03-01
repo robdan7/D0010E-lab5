@@ -23,6 +23,23 @@ public class MarketState extends State {
 
 	private boolean isOpen = false;
 
+	/**
+	 * Constructor for MarketState
+	 * 
+	 * @param maxCustomers
+	 *            amount of customers that can be inside the store.
+	 * @param arrivalTime
+	 *            the lambda of time when customers arrive.
+	 * @param checkoutTime
+	 *            the lower and upper bound of the time it takes to pay and leave.
+	 * @param pickingTime
+	 *            the lower and upper bound of the time to pick the groceries'.
+	 * @param numberOfCheckouts
+	 *            the amount of checkouts the store has.
+	 * @param seed
+	 *            the seed all randomness is based of.
+	 */
+
 	public MarketState(int maxCustomers, double arrivalTime, double[] checkoutTime, double[] pickingTime,
 			int numberOfCheckouts, long seed) {
 		this.checkoutQueue = new FifoQueue<Customer>();
@@ -145,7 +162,7 @@ public class MarketState extends State {
 	 * 
 	 * @return
 	 */
-	public int getSeed() {
+	public long getSeed() {
 		return this.seed;
 	}
 }
