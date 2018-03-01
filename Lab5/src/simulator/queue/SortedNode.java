@@ -3,7 +3,7 @@ package simulator.queue;
 /**
  * This class is a special node for determining the priority of the item. A node
  * of this kind can be put in the queue at a specific position determined by the
- * "size" of it's item.
+ * "size" of its item.
  * 
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
