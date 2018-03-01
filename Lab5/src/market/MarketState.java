@@ -165,4 +165,16 @@ public class MarketState extends State {
 	public long getSeed() {
 		return this.seed;
 	}
+
+	@Override
+	public String[] sendData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

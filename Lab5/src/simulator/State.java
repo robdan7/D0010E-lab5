@@ -12,7 +12,7 @@ import simulator.queue.EventQueue;
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
-public class State extends Observable {
+public abstract class State extends Observable {
 	private boolean flag; // emergency break
 	@Deprecated
 	private double time;	// Event-time'
@@ -50,6 +50,10 @@ public class State extends Observable {
 		notifyObservers();
 	}
 	
+	public abstract String[] sendData();
+	
+	@Override
+	public abstract String toString();
 	
 	/*
 	 * Private inner class inherit Event
