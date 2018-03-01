@@ -1,5 +1,9 @@
 package market.checkout;
 
+/**
+ * This class creates new checkouts and keeps track of available checkouts etc.
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ */
 public class CheckoutFactory {
 	private Checkout[] checkouts;
 	

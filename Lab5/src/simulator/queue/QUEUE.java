@@ -1,7 +1,7 @@
 package simulator.queue;
 
 /**
- * 
+ * This abstract class is a stencil for general queues.
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */

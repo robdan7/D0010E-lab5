@@ -1,5 +1,10 @@
 package market.checkout;
 
+/**
+ * This class represents a single checkout in the market.
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ *
+ */
 public class Checkout {
 	private boolean isUsed = false;
 	private double timeClosed = 0;

@@ -9,6 +9,11 @@ import simulator.queue.EventQueue;
 import simulator.queue.FifoQueue;
 import simulator.queue.QUEUE;
 
+/**
+ * This class represents a customer arrival. It is also responsible for creating new customers.
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ */
+
 public class ArrivalEvent extends Event {
 	private Customerfactory factory;
 	private QUEUE<Customer> customerQueue;

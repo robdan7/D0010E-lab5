@@ -1,10 +1,8 @@
 package market.customer;
 /**
-	 * 
-	 * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
-	 * 
-	 * this Class keeps count on the number of cars created.
-	 */
+ * this Class keeps count on the number of cars created.
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ */
 public class Customerfactory {
 	
 	private int customersnumber = 0; //counter
