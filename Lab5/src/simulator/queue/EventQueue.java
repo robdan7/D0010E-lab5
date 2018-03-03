@@ -16,6 +16,9 @@ public class EventQueue {
 	}
 	
 	public void addEvent(Event e) {
+		if (e == null) {
+			throw new IllegalArgumentException();
+		}
 		this.queue.add(e);
 	}
 	
@@ -33,5 +36,9 @@ public class EventQueue {
 	 */
 	public void nextEvent(State state) {
 		this.queue.next().action(this, state);
+	}
+	
+	public int size() {
+		return this.queue.size();
 	}
 }

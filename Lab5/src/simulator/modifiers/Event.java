@@ -12,6 +12,10 @@ import simulator.queue.SortedItem;
 public abstract class Event implements SortedItem {
 	private double time;
 
+	/**
+	 * 
+	 * @param time - The time for this event.
+	 */
 	protected Event(double time) {
 		this.time = time;
 	}
@@ -29,4 +33,7 @@ public abstract class Event implements SortedItem {
 	}
 
 	public abstract void action(EventQueue eventQueue, State state);
+	
+	@Override
+	public abstract String toString();
 }

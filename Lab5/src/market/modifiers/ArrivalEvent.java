@@ -1,5 +1,6 @@
 package market.modifiers;
 
+import market.DataPackage;
 import market.MarketState;
 import market.customer.Customer;
 import market.customer.Customerfactory;
@@ -14,10 +15,9 @@ import simulator.queue.QUEUE;
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  */
 
-public class ArrivalEvent extends Event {
+public class ArrivalEvent extends MarketEvent {
 	private Customerfactory factory;
-	private QUEUE<Customer> customerQueue;
-	private Customer customer;
+	private DataPackage data;
 
 	/**
 	 * Create the first arrivalEvent for new customers.
@@ -25,9 +25,10 @@ public class ArrivalEvent extends Event {
 	 * @param time
 	 *            - The time a customer arrives.
 	 */
-	ArrivalEvent(double time) {
-		this(new Customerfactory(), new FifoQueue<Customer>(), time);
+	ArrivalEvent(double time, DataPackage data) {
+		this(new Customerfactory(), time, data);
 	}
+
 
 	/**
 	 * Create an event for new customers.
@@ -36,40 +37,45 @@ public class ArrivalEvent extends Event {
 	 * @param checkoutQueue - The common queue for future checkouts.
 	 * @param time - The arrival time.
 	 */
-	private ArrivalEvent(Customerfactory factory, QUEUE<Customer> checkoutQueue, double time) {
-		super(time);
+	private ArrivalEvent(Customerfactory factory, double time, DataPackage data) {
+		super(factory.newcustomer(), time);
 		this.factory = factory;
-		this.customer = this.factory.newcustomer();
-		this.customerQueue = checkoutQueue;
+		this.data = data;
 	}
 
 	public void action(EventQueue eventQueue, State state) {
 		if (!(state instanceof MarketState)) {
 			throw new ClassCastException();
 		}
-		eventQueue.addEvent(new QueueEvent(this.factory.newcustomer(), this.customerQueue,
-				((MarketState) state).nextToQueueTime(super.getTime())));
+		((MarketState)state).notifyFromEvent(this);
+		eventQueue.addEvent(new QueueEvent(this.factory.newcustomer(),
+				((MarketState) state).nextToQueueTime(super.getTime()), data));
 		if (((MarketState) state).isOpen()) {
 			// Create a new arrival event for the next customer.
 			double t = ((MarketState) state).nextArrivalTime(super.getTime()); // The time to arrive.
 			
 			// Create the next arrival event.
-			eventQueue.addEvent(new ArrivalEvent(this.factory, this.customerQueue, t));
+			eventQueue.addEvent(new ArrivalEvent(this.factory, t, this.data));
 			
 			// See if the market if full or not.
-			if (!((MarketState)state).marketIsFull()) {
-				((MarketState) state).addCustomer();
+			if (!data.marketIsFull()) {
+				data.addCustomer();
 				
 				// The time until the customer is at the queue.
 				t = ((MarketState)state).nextToQueueTime(super.getTime());
 				
 				// Add this customer to the ckeckout queue.
-				eventQueue.addEvent(new QueueEvent(this.customer, customerQueue, t));
+				eventQueue.addEvent(new QueueEvent(super.getCustomer(), t, data));
 			} else {
 				// The market is full. We lost a customer.
-				((MarketState)state).addMissedCustomer();
+				data.addMissedCustomer();
 			}
 
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Ankomst";
 	}
 }

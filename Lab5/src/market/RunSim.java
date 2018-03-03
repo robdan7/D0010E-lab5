@@ -18,14 +18,15 @@ public class RunSim {
 	 * @param endTime
 	 * @param seed
 	 */
-	public RunSim(int maxCustomers, int maxCheckouts, double arrivalTime, double[] checkoutTime, double[] pickingTime,
-			double closingTime, double endTime, long seed) {
+	public RunSim(DataPackage data,  double endTime) {
 		
-		
-		MarketState s = new MarketState(maxCustomers, arrivalTime, checkoutTime, pickingTime, maxCheckouts, seed);
+		MarketState s = new MarketState(data);
 		MarketView view = new MarketView(s);
+		view.printHeader();
 		EventQueue q = new EventQueue();
-		Event open = new OpeningEvent(q, closingTime, endTime);
+		Event open = new OpeningEvent(q, data.getClosingTime(), endTime, data);
+		
 		Simulator sim = new Simulator(s, q, open, 0, 0, 0);
+		sim.run();
 	}
 }

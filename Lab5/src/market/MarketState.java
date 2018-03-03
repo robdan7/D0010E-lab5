@@ -4,7 +4,9 @@ import market.checkout.Checkout;
 import market.checkout.CheckoutFactory;
 import market.customer.Customer;
 import market.customer.Customerfactory;
+import market.modifiers.MarketEvent;
 import simulator.State;
+import simulator.modifiers.Event;
 import simulator.queue.FifoQueue;
 import simulator.queue.QUEUE;
 import simulator.stream.*;
@@ -15,67 +17,30 @@ public class MarketState extends State {
 	private ExponentialRandomStream customerArrivalTime;
 	private UniformRandomStream checkoutTime;
 	private UniformRandomStream untilQueueTime;
-	private long seed;
-	private double[] checkoutTimeBounds, untilQueueTimeBounds;
-	private int maxCustomers, totalCustomers, missedCustomers;
-
-	private int customersInside = 0;
+	private MarketEvent latestEvent = null;
+	DataPackage data;
+	
 
 	private boolean isOpen = false;
 
-	/**
-	 * Constructor for MarketState
-	 * 
-	 * @param maxCustomers
-	 *            amount of customers that can be inside the store.
-	 * @param arrivalTime
-	 *            the lambda of time when customers arrive.
-	 * @param checkoutTime
-	 *            the lower and upper bound of the time it takes to pay and leave.
-	 * @param pickingTime
-	 *            the lower and upper bound of the time to pick the groceries'.
-	 * @param numberOfCheckouts
-	 *            the amount of checkouts the store has.
-	 * @param seed
-	 *            the seed all randomness is based of.
-	 */
-
-	public MarketState(int maxCustomers, double arrivalTime, double[] checkoutTime, double[] pickingTime,
-			int numberOfCheckouts, long seed) {
+	public MarketState(DataPackage data) {
+		this.data = data;
 		this.checkoutQueue = new FifoQueue<Customer>();
-		this.customerArrivalTime = new ExponentialRandomStream(arrivalTime, seed);
-		this.checkoutTime = new UniformRandomStream(pickingTime[0], pickingTime[1], seed);
-		this.untilQueueTime = new UniformRandomStream(checkoutTime[0], checkoutTime[1], seed);
-		this.checkouts = new CheckoutFactory(numberOfCheckouts);
-
-		this.checkoutTimeBounds = checkoutTime;
-		this.untilQueueTimeBounds = pickingTime;
-		this.maxCustomers = maxCustomers;
-		this.seed = seed;
+		this.customerArrivalTime = new ExponentialRandomStream(data.getArrivalTime(), data.getSeed());
+		this.checkoutTime = new UniformRandomStream(data.getPickingTime()[0], data.getPickingTime()[1], data.getSeed());
+		this.untilQueueTime = new UniformRandomStream(data.getCheckoutTime()[0], data.getCheckoutTime()[1], data.getSeed());
+		this.checkouts = new CheckoutFactory(data.getCheckoutAmount());
 	}
-
-	public boolean marketIsFull() {
-		return this.maxCustomers == this.customersInside;
-	}
-
-	public void addCustomer() {
-		this.customersInside++;
-		this.totalCustomers++;
-	}
-
-	public int getTotalCustomers() {
-		return this.totalCustomers;
-	}
-
-	public void addMissedCustomer() {
-		this.missedCustomers++;
-	}
-
-	public void customerLeaves() throws Exception {
-		if (this.customersInside <= 0) {
-			throw new Exception("One customer is missing!");
-		}
-		this.customersInside--;
+	
+	
+	/**
+	 * 
+	 * @param event - The event.
+	 */
+	public void notifyFromEvent(MarketEvent event) {
+		this.latestEvent = event;
+		super.setChanged();
+		super.notifyObservers();
 	}
 
 	/**
@@ -157,24 +122,15 @@ public class MarketState extends State {
 		return this.checkouts.requestCheckout(time);
 	}
 
-	/**
-	 * Return the seed for the random generators.
-	 * 
-	 * @return
-	 */
-	public long getSeed() {
-		return this.seed;
-	}
-
-	@Override
-	public String[] sendData() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.latestEvent == null) {
+			return "";
+		}
+		return String.format("%.2f", this.latestEvent.getTime()) + "\t" + 
+		this.latestEvent.toString() + "\t" + 
+		this.latestEvent.getCustomer().toString() + "\t" + 
+		this.isOpen + "\t" + 
+		this.data.getCheckoutQueue().toString();
 	}
 }

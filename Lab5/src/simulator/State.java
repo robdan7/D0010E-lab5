@@ -14,8 +14,6 @@ import simulator.queue.EventQueue;
  */
 public abstract class State extends Observable {
 	private boolean flag; // emergency break
-	@Deprecated
-	private double time;	// Event-time'
 	
 	private EventQueue eventQueue;
 	
@@ -24,7 +22,6 @@ public abstract class State extends Observable {
 	 */
 	public State() {
 		this.flag = true;
-		time = new StateEvent(0).getTime(); // Where is this used?
 	}
 	
 	/*
@@ -50,23 +47,6 @@ public abstract class State extends Observable {
 		notifyObservers();
 	}
 	
-	public abstract String[] sendData();
-	
 	@Override
 	public abstract String toString();
-	
-	/*
-	 * Private inner class inherit Event
-	 */
-	@Deprecated
-	private class StateEvent extends Event{
-		
-		protected StateEvent(float time) {
-			super(time);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public void action(EventQueue eventQueue, State state) {	}
-	}
 }

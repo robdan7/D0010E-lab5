@@ -3,18 +3,17 @@ package market;
 import java.util.Observable;
 import java.util.Observer;
 import simulator.State;
+import simulator.View;
 
 
-public class MarketView implements Observer {
+public class MarketView extends View{
 	State state;
 	
 	MarketView(State observable){
-		observable.addObserver(this);
-		this.state=observable;
-		this.printHeader();
+		super(observable);
 	}
 	
-	private static void printHeader() {
+	void printHeader() {
 		System.out.println("PARAMETRAR");
 		System.out.println("==========");
 		System.out.println("Antal kassor, N..........: " + "antal");
@@ -31,13 +30,6 @@ public class MarketView implements Observer {
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(arg0.toString());
 	}
-	
-	public static void main(String[] args) {
-		printHeader();
-	}
-	
-
 }

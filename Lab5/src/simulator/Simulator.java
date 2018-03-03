@@ -38,16 +38,15 @@ public class Simulator {
 		this.seed = seed;
 		expRand = new ExponentialRandomStream(seed);
 		uniRand = new UniformRandomStream(lowerbound, upperbound, seed);
-		View view = new View(state);
+		
 	}
 	
 	/**
 	 * Runs the simulator. It will keep running while the state is active.
 	 * 
-	 * @param start start event
 	 * @throws IndexOutOfBoundsException - The queue has no more elements.
 	 */
-	public void run(Event start) throws IndexOutOfBoundsException{
+	public void run() throws IndexOutOfBoundsException{
 		while (this.state.getFlag()) {
 			if (this.queue.isEmpty()) {
 				throw new IndexOutOfBoundsException("No ending event has been added!");

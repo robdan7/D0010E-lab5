@@ -41,6 +41,6 @@ public class FifoQueue<E> extends QUEUE<E>{
 		if (this.isEmpty()) {
 			return "";
 		}
-		return super.getFirst().getNext().toString();
+		return "[" + super.getFirst().getNext().toString() + "]";
 	}
 }

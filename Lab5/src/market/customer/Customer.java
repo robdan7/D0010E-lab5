@@ -52,4 +52,9 @@ public class Customer {
 		}
 		return this.ID() == ((Customer)o).ID();
 	}
+	
+	@Override
+	public String toString() {
+		return this.ID() + "";
+	}
 }

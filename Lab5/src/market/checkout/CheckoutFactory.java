@@ -9,6 +9,9 @@ public class CheckoutFactory {
 	
 	public CheckoutFactory(int numberOfCheckouts) {
 		this.checkouts = new Checkout[numberOfCheckouts];
+		for (int i = 0; i < this.checkouts.length; i++) {
+			this.checkouts[i] = new Checkout();
+		}
 	}
 	
 	/**

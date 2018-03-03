@@ -1,5 +1,6 @@
 package market.modifiers;
 
+import market.DataPackage;
 import market.MarketState;
 import market.checkout.Checkout;
 import market.customer.Customer;
@@ -16,14 +17,14 @@ import simulator.queue.QUEUE;
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
-public class QueueEvent extends Event {
+public class QueueEvent extends MarketEvent {
 	private Customer customer;
-	private QUEUE<Customer> customerQueue;
+	private DataPackage data;
 	
-	QueueEvent(Customer c,QUEUE<Customer> queue, double time) {
-		super(time);
+	QueueEvent(Customer c, double time, DataPackage data) {
+		super(c, time);
 		this.customer = c;
-		this.customerQueue = queue;
+		this.data = data;
 	}
 
 	@Override
@@ -31,18 +32,24 @@ public class QueueEvent extends Event {
 		if (!(state instanceof MarketState)) {
 			throw new ClassCastException();
 		}
+		((MarketState)state).notifyFromEvent(this);
 		// If the queue is empty and at least one checkout is closed: Go to checkout.
 		if (((MarketState)state).checkoutQueueIsEmpty() && ((MarketState)state).hasAvailableCheckout()) {
 			Checkout c = ((MarketState)state).requestCheckout(super.getTime());
 			double t = ((MarketState)state).nextCheckoutTime(super.getTime());
-			eventQueue.addEvent(new CheckoutEvent(this.customer, c, customerQueue, t));
+			eventQueue.addEvent(new CheckoutEvent(this.customer, c, t, data));
 		} 
 		
 		// All checkouts are used and the queue is not 
 		else {
 			this.customer.arriveToQueue(super.getTime());
-			this.customerQueue.add(this.customer);
+			this.data.getCheckoutQueue().add(this.customer);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Betalkö";
 	}
 	
 }

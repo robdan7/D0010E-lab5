@@ -1,6 +1,7 @@
 package market.modifiers;
 
 import market.MarketState;
+import market.customer.Customer;
 import simulator.State;
 import simulator.modifiers.Event;
 import simulator.queue.EventQueue;
@@ -10,10 +11,20 @@ import simulator.queue.EventQueue;
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
-public class ClosingEvent extends Event {
+public class ClosingEvent extends MarketEvent {
 
 	ClosingEvent(double time) {
-		super(time);
+		super(null, time);
+	}
+	
+	@Override
+	public Customer getCustomer() {
+		return new Customer(-1) {
+			@Override
+			public String toString() {
+				return "---";
+			}
+		};
 	}
 
 	@Override
@@ -21,7 +32,13 @@ public class ClosingEvent extends Event {
 		if (!(state instanceof MarketState)) {
 			throw new ClassCastException();
 		}
+		((MarketState)state).notifyFromEvent(this);
 		((MarketState)state).setClosed();
+	}
+
+	@Override
+	public String toString() {
+		return "Stänger";
 	}
 
 }

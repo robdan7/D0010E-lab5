@@ -1,6 +1,8 @@
 package market.modifiers;
 
+import market.DataPackage;
 import market.MarketState;
+import market.customer.Customer;
 import simulator.State;
 import simulator.modifiers.Event;
 import simulator.queue.EventQueue;
@@ -11,8 +13,9 @@ import simulator.queue.EventQueue;
  * 
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  */
-public class OpeningEvent extends Event {
+public class OpeningEvent extends MarketEvent {
 	private double closingTime, endOfWorldTime;
+	private DataPackage data;
 
 	/**
 	 * Create the starting event of the market. This events will create one arrival
@@ -25,10 +28,21 @@ public class OpeningEvent extends Event {
 	 * @param endOfWorldTime
 	 *            - Time when the simulation ends.
 	 */
-	public OpeningEvent(EventQueue eventQueue, double closingTime, double endOfWorldTime) {
-		super(0);
+	public OpeningEvent(EventQueue eventQueue, double closingTime, double endOfWorldTime, DataPackage data) {
+		super(null, 0);
 		this.closingTime = closingTime;
 		this.endOfWorldTime = endOfWorldTime;
+		this.data = data;
+	}
+	
+	@Override
+	public Customer getCustomer() {
+		return new Customer(-1) {
+			@Override
+			public String toString() {
+				return "";
+			}
+		};
 	}
 
 	@Override
@@ -36,9 +50,10 @@ public class OpeningEvent extends Event {
 		if (!(state instanceof MarketState)) {
 			throw new ClassCastException();
 		}
+		((MarketState)state).notifyFromEvent(this);
 		((MarketState) state).setOpen();
 		eventQueue.addEvent(new ClosingEvent(this.closingTime));
-		eventQueue.addEvent(new ArrivalEvent(((MarketState) state).nextArrivalTime(super.getTime())));
+		eventQueue.addEvent(new ArrivalEvent(((MarketState) state).nextArrivalTime(super.getTime()), this.data));
 
 		// Break event.
 		eventQueue.addEvent(new Event(this.endOfWorldTime) {
@@ -48,7 +63,17 @@ public class OpeningEvent extends Event {
 				((MarketState) state).endState();
 			}
 
+			@Override
+			public String toString() {
+				return "Stop";
+			}
+
 		});
+	}
+
+	@Override
+	public String toString() {
+		return "Start";
 	}
 
 }
