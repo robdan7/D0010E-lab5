@@ -48,9 +48,8 @@ public class ArrivalEvent extends MarketEvent {
 			throw new ClassCastException();
 		}
 		((MarketState)state).notifyFromEvent(this);
-		eventQueue.addEvent(new QueueEvent(this.factory.newcustomer(),
-				((MarketState) state).nextToQueueTime(super.getTime()), data));
 		if (((MarketState) state).isOpen()) {
+			
 			// Create a new arrival event for the next customer.
 			double t = ((MarketState) state).nextArrivalTime(super.getTime()); // The time to arrive.
 			

@@ -8,8 +8,9 @@ package market.customer;
 public class Customer {
 
 	private final int customerid;
-	double timeinqueue;
-	double queueArrival;
+	private double timeInQueue;
+	private double queueArrival;
+	private boolean hasQueued = false;
 	
 	/**
 	 * @param customerID
@@ -25,8 +26,12 @@ public class Customer {
 		return customerid;
 	}
 	
-	public double getTimeInQueue() {
-		return this.timeinqueue;
+	public double getTimeInQueue(double time) {
+		// The customer is still in the queue if the counted time is still 0. Do not change this.
+		if (this.hasQueued && this.timeInQueue == 0) {
+			return time-this.queueArrival;
+		}
+		return this.timeInQueue;
 	}
 	
 	/**
@@ -35,6 +40,7 @@ public class Customer {
 	 */
 	public void arriveToQueue(double time) {
 		this.queueArrival = time;
+		this.hasQueued = true;
 	}
 	
 	/**
@@ -42,7 +48,7 @@ public class Customer {
 	 * @param time - The current time.
 	 */
 	public void leaveQueue(double time) {
-		this.timeinqueue = time-this.queueArrival;
+		this.timeInQueue = this.hasQueued ? time-this.queueArrival : 0;
 	}
 	
 	@Override

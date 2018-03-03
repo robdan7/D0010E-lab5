@@ -39,17 +39,26 @@ public class CheckoutEvent extends MarketEvent {
 			throw new ClassCastException();
 		}
 		((MarketState)state).notifyFromEvent(this);
-		this.checkout.setClosed(super.getTime());
+		
+		
+		this.data.addQueueTime(super.getCustomer().getTimeInQueue(super.getTime()));
 		
 		if (!this.data.getCheckoutQueue().isEmpty()) {
 			double t = ((MarketState)state).nextCheckoutTime(super.getTime());
-			CheckoutEvent e = new CheckoutEvent(this.data.getCheckoutQueue().next(), this.checkout, t, data);
+			
+			// Take next customer from the queue.
+			Customer nextCustomer = this.data.getCheckoutQueue().next();
+			// Make sure the customer queue timer stops.
+			nextCustomer.leaveQueue(super.getTime());
+			
+			// Create next event for the next customer.
+			CheckoutEvent e = new CheckoutEvent(nextCustomer, this.checkout, t, data);
 			eventQueue.addEvent(e);
 		} else {
 			this.checkout.setClosed(super.getTime());
 		}
 		try {
-			
+			this.data.customerLeaves(super.getCustomer(), super.getTime());
 		} catch (Exception e) {
 			e.printStackTrace(); // One customer is missing!
 		}

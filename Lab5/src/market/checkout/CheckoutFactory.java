@@ -21,12 +21,29 @@ public class CheckoutFactory {
 	public boolean isFull() {
 		boolean flag = true;
 		for (Checkout c: this.checkouts) {
-			if (!c.isUsed()) {
+			if (!c.isOpened()) {
 				flag = false;
 				break;
 			}
 		}
 		return flag;
+	}
+	
+	public int getClosedcheckouts() {
+		int i = 0;
+		for (Checkout c : this.checkouts) {
+			i += !c.isOpened() ? 1 : 0;
+		}
+		return i;
+	}
+	
+	public double getTimeClosed(double time) {
+		double resultTime = 0;
+		for (Checkout c : this.checkouts) {
+			resultTime += c.getTimeClosed(time);
+		}
+		
+		return resultTime;
 	}
 	
 	/**
@@ -37,7 +54,7 @@ public class CheckoutFactory {
 	 */
 	public Checkout requestCheckout(double time) throws NullPointerException{
 		for (Checkout c : this.checkouts) {
-			if (!c.isUsed()) {
+			if (!c.isOpened()) {
 				c.setUsed(time);
 				return c;
 			}

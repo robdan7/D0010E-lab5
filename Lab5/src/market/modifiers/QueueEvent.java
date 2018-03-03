@@ -18,12 +18,10 @@ import simulator.queue.QUEUE;
  *
  */
 public class QueueEvent extends MarketEvent {
-	private Customer customer;
 	private DataPackage data;
 	
 	QueueEvent(Customer c, double time, DataPackage data) {
 		super(c, time);
-		this.customer = c;
 		this.data = data;
 	}
 
@@ -37,13 +35,14 @@ public class QueueEvent extends MarketEvent {
 		if (((MarketState)state).checkoutQueueIsEmpty() && ((MarketState)state).hasAvailableCheckout()) {
 			Checkout c = ((MarketState)state).requestCheckout(super.getTime());
 			double t = ((MarketState)state).nextCheckoutTime(super.getTime());
-			eventQueue.addEvent(new CheckoutEvent(this.customer, c, t, data));
+			eventQueue.addEvent(new CheckoutEvent(super.getCustomer(), c, t, data));
 		} 
 		
-		// All checkouts are used and the queue is not 
+		// All checkouts are used. Go to the queue.
 		else {
-			this.customer.arriveToQueue(super.getTime());
-			this.data.getCheckoutQueue().add(this.customer);
+			this.data.addQueuedCustomer();
+			super.getCustomer().arriveToQueue(super.getTime());
+			this.data.getCheckoutQueue().add(super.getCustomer());
 		}
 	}
 

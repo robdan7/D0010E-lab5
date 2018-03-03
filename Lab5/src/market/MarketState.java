@@ -27,8 +27,8 @@ public class MarketState extends State {
 		this.data = data;
 		this.checkoutQueue = new FifoQueue<Customer>();
 		this.customerArrivalTime = new ExponentialRandomStream(data.getArrivalTime(), data.getSeed());
-		this.checkoutTime = new UniformRandomStream(data.getPickingTime()[0], data.getPickingTime()[1], data.getSeed());
-		this.untilQueueTime = new UniformRandomStream(data.getCheckoutTime()[0], data.getCheckoutTime()[1], data.getSeed());
+		this.checkoutTime = new UniformRandomStream(data.getCheckoutTime()[0], data.getCheckoutTime()[1], data.getSeed());
+		this.untilQueueTime = new UniformRandomStream(data.getPickingTime()[0], data.getPickingTime()[1], data.getSeed());
 		this.checkouts = new CheckoutFactory(data.getCheckoutAmount());
 	}
 	
@@ -128,9 +128,17 @@ public class MarketState extends State {
 			return "";
 		}
 		return String.format("%.2f", this.latestEvent.getTime()) + "\t" + 
-		this.latestEvent.toString() + "\t" + 
+		this.latestEvent.toString() + "   \t" + 
 		this.latestEvent.getCustomer().toString() + "\t" + 
-		this.isOpen + "\t" + 
+		(this.isOpen ? "Ö":"S") + "\t" + 
+		this.checkouts.getClosedcheckouts() + "\t" +
+		String.format("%.2f", this.checkouts.getTimeClosed(this.latestEvent.getTime())) + "\t" +
+		this.data.getCustomersInside() + "\t"+
+		this.data.getTotalCustomers() + "\t" +
+		this.data.getMissedCustomers() + "\t"+
+		this.data.getTotalQueuedCustomers() + "\t" +
+		String.format("%.2f", this.data.getTotalQueueTime(this.latestEvent.getTime())) +"\t"+
+		this.data.getCustomersInQueue() + "\t" +
 		this.data.getCheckoutQueue().toString();
 	}
 }

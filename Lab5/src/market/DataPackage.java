@@ -12,8 +12,9 @@ import simulator.queue.QUEUE;
 public class DataPackage {
 	private final long seed;
 	private final int maxCustomers;
-	private int totalCustomers, missedCustomers;
+	private int totalCustomers, missedCustomers, queuedCustomers;
 	private final double arrivalTime, closingTime;
+	private double totalQueueTime;
 	private final double[] checkoutTime, pickingTime;
 	QUEUE<Customer> checkoutQueue;
 
@@ -105,21 +106,45 @@ public class DataPackage {
 
 	public void addCustomer() {
 		this.customersInside++;
-		this.totalCustomers++;
 	}
 
 	int getTotalCustomers() {
 		return this.totalCustomers;
+	}
+	
+	public void addQueuedCustomer() {
+		this.queuedCustomers++;
+	}
+	
+	int getTotalQueuedCustomers() {
+		return this.queuedCustomers;
+	}
+	
+	int getCustomersInQueue() {
+		return this.checkoutQueue.size();
+	}
+	
+	public void addQueueTime(double time) {
+		this.totalQueueTime += time;
+	}
+	
+	double getTotalQueueTime(double time) {
+		double totalTime = 0;
+		for (Customer c : this.checkoutQueue) {
+			totalTime += c.getTimeInQueue(time);
+		}
+		return this.totalQueueTime + totalTime;
 	}
 
 	public void addMissedCustomer() {
 		this.missedCustomers++;
 	}
 
-	public void customerLeaves() throws Exception {
+	public void customerLeaves(Customer c, double time) throws Exception {
 		if (this.customersInside <= 0) {
 			throw new Exception("One customer is missing!");
 		}
+		this.totalCustomers++;
 		this.customersInside--;
 	}
 }

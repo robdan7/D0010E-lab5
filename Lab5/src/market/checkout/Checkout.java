@@ -6,7 +6,7 @@ package market.checkout;
  *
  */
 public class Checkout {
-	private boolean isUsed = false;
+	private boolean isOpened = false;
 	private double timeClosed = 0;
 	private double lastTimeOpen = 0;
 	
@@ -16,10 +16,15 @@ public class Checkout {
 	
 	/**
 	 * Get the amount of time this checkout has been closed.
+	 * @param time - Current time.
 	 * @return
 	 */
-	public double getTimeClosed() {
-		return this.timeClosed;
+	public double getTimeClosed(double time) {
+		if (this.isOpened()) {
+			return this.timeClosed;
+		} else {
+			return this.timeClosed + (time-this.lastTimeOpen);
+		}
 	}
 	
 	/**
@@ -28,11 +33,11 @@ public class Checkout {
 	 */
 	void setUsed(double d) {
 		this.timeClosed += (d-this.lastTimeOpen);
-		this.isUsed = true;
+		this.isOpened = true;
 	}
 	
-	public boolean isUsed() {
-		return this.isUsed;
+	public boolean isOpened() {
+		return this.isOpened;
 	}
 	
 	/**
@@ -41,6 +46,6 @@ public class Checkout {
 	 */
 	public void setClosed(double d) {
 		this.lastTimeOpen = d;
-		this.isUsed = false;
+		this.isOpened = false;
 	}
 }
