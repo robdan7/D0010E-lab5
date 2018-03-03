@@ -5,7 +5,7 @@ package simulator.queue;
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
-public abstract class QUEUE<E> {
+public abstract class QUEUE<E> implements Iterable<E>{
 	private final Node<E> start;
 	private int size = 0;
 
