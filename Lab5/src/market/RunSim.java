@@ -28,5 +28,6 @@ public class RunSim {
 		
 		Simulator sim = new Simulator(s, q, open, 0, 0, 0);
 		sim.run();
+		view.printFooter();
 	}
 }

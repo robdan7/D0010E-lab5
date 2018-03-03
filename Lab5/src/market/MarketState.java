@@ -14,11 +14,12 @@ import simulator.stream.*;
 public class MarketState extends State {
 	private QUEUE<Customer> checkoutQueue;
 	private CheckoutFactory checkouts;
+	private double closedCheckoutTime = 0;
 	private ExponentialRandomStream customerArrivalTime;
 	private UniformRandomStream checkoutTime;
 	private UniformRandomStream untilQueueTime;
 	private MarketEvent latestEvent = null;
-	DataPackage data;
+	private DataPackage data;
 	
 
 	private boolean isOpen = false;
@@ -32,7 +33,9 @@ public class MarketState extends State {
 		this.checkouts = new CheckoutFactory(data.getCheckoutAmount());
 	}
 	
-	
+	DataPackage getData() {
+		return this.data;
+	}
 	/**
 	 * 
 	 * @param event - The event.
@@ -109,6 +112,13 @@ public class MarketState extends State {
 	public boolean hasAvailableCheckout() {
 		return !this.checkouts.isFull();
 	}
+	
+	double getClosedCheckoutTime() {
+		if (this.getFlag()) {
+			this.closedCheckoutTime = this.checkouts.getTimeClosed(this.latestEvent.getTime());
+		}
+		return this.closedCheckoutTime;
+	}
 
 	/**
 	 * Request a checkout to use.
@@ -126,13 +136,16 @@ public class MarketState extends State {
 	public String toString() {
 		if (this.latestEvent == null) {
 			return "";
+		} else if (this.latestEvent.getCustomer() == null) {
+			return String.format("%.2f", this.latestEvent.getTime()) + "\t" + 
+					this.latestEvent.toString();
 		}
 		return String.format("%.2f", this.latestEvent.getTime()) + "\t" + 
 		this.latestEvent.toString() + "   \t" + 
 		this.latestEvent.getCustomer().toString() + "\t" + 
 		(this.isOpen ? "Ö":"S") + "\t" + 
 		this.checkouts.getClosedcheckouts() + "\t" +
-		String.format("%.2f", this.checkouts.getTimeClosed(this.latestEvent.getTime())) + "\t" +
+		String.format("%.2f",  this.getClosedCheckoutTime())+ "\t" +
 		this.data.getCustomersInside() + "\t"+
 		this.data.getTotalCustomers() + "\t" +
 		this.data.getMissedCustomers() + "\t"+

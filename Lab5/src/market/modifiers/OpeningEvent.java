@@ -34,16 +34,6 @@ public class OpeningEvent extends MarketEvent {
 		this.endOfWorldTime = endOfWorldTime;
 		this.data = data;
 	}
-	
-	@Override
-	public Customer getCustomer() {
-		return new Customer(-1) {
-			@Override
-			public String toString() {
-				return "";
-			}
-		};
-	}
 
 	@Override
 	public void action(EventQueue eventQueue, State state) {
@@ -56,10 +46,11 @@ public class OpeningEvent extends MarketEvent {
 		eventQueue.addEvent(new ArrivalEvent(((MarketState) state).nextArrivalTime(super.getTime()), this.data));
 
 		// Break event.
-		eventQueue.addEvent(new Event(this.endOfWorldTime) {
+		eventQueue.addEvent(new MarketEvent(null, this.endOfWorldTime) {
 
 			@Override
 			public void action(EventQueue eventQueue, State state) {
+				((MarketState)state).notifyFromEvent(this);
 				((MarketState) state).endState();
 			}
 
