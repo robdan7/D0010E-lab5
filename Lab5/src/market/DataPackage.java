@@ -1,5 +1,10 @@
 package market;
 
+/**
+ * 
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ *
+ */
 import market.customer.Customer;
 import simulator.queue.FifoQueue;
 import simulator.queue.QUEUE;

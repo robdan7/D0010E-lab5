@@ -14,12 +14,6 @@ import simulator.stream.*;
 public class Simulator {
 	private EventQueue queue; // Event queue
 	private final State state; // Current state
-	@Deprecated
-	private ExponentialRandomStream expRand;
-	@Deprecated
-	private UniformRandomStream uniRand;
-	@Deprecated
-	private long seed;
 
 	
 	/**
@@ -35,10 +29,6 @@ public class Simulator {
 		this.state = state;
 		queue = eventQueue;
 		queue.addEvent(startEvent);
-		this.seed = seed;
-		expRand = new ExponentialRandomStream(seed);
-		uniRand = new UniformRandomStream(lowerbound, upperbound, seed);
-		
 	}
 	
 	/**
@@ -53,29 +43,5 @@ public class Simulator {
 			}
 			queue.nextEvent(this.state);
 		}
-	}
-	
-	/**
-	 * 
-	 * @return - next uniformed random double
-	 */
-	public double getUniRand() {
-		return uniRand.next();
-	}
-	
-	/**
-	 * 
-	 * @return - next exponential random double
-	 */
-	public double getExpRand() {
-		return expRand.next();
-	}
-	
-	/**
-	 * 
-	 * @return - seed
-	 */
-	public long getSeed() {
-		return this.seed;
 	}
 }

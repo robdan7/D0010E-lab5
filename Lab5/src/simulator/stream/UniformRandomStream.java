@@ -2,7 +2,11 @@ package simulator.stream;
 
 import java.util.Random;
 
-
+/**
+ * 
+ * @author Håkan
+ *
+ */
 public class UniformRandomStream {
 
 	private Random rand;

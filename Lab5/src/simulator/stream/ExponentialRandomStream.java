@@ -3,6 +3,11 @@ package simulator.stream;
 
 import java.util.Random;
 
+/**
+ * 
+ * @author Håkan
+ *
+ */
 public class ExponentialRandomStream {
 	
 	private Random rand;

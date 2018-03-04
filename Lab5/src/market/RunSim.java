@@ -5,6 +5,11 @@ import simulator.Simulator;
 import simulator.modifiers.Event;
 import simulator.queue.EventQueue;
 
+/**
+ * 
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ *
+ */
 public class RunSim {
 
 	/**
@@ -18,16 +23,19 @@ public class RunSim {
 	 * @param endTime
 	 * @param seed
 	 */
-	public RunSim(DataPackage data,  double endTime) {
+	public RunSim(DataPackage data,  double endTime, boolean useView) {
 		
 		MarketState s = new MarketState(data);
 		MarketView view = new MarketView(s);
-		view.printHeader();
+		if (useView) {
+			s.addObserver(view);
+		}
+		if (useView) view.printHeader();
 		EventQueue q = new EventQueue();
 		Event open = new OpeningEvent(q, data.getClosingTime(), endTime, data);
 		
 		Simulator sim = new Simulator(s, q, open, 0, 0, 0);
 		sim.run();
-		view.printFooter();
+		if(useView) view.printFooter();
 	}
 }

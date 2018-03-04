@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
- * 
+ * This class represents a view of a state. The purpose is to get information and do something with it.
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
@@ -15,7 +15,6 @@ public abstract class View<E extends State> implements Observer{
 	
 	public View(E state) {
 		this.state = state;
-		state.addObserver(this);
 	}
 	
 	protected final  E getState() {

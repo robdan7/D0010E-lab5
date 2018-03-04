@@ -5,7 +5,11 @@ import java.util.Observer;
 import simulator.State;
 import simulator.View;
 
-
+/**
+ * 
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ *
+ */
 public class MarketView extends View<MarketState>{
 	
 	MarketView(MarketState observable){

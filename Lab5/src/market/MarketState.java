@@ -10,7 +10,11 @@ import simulator.modifiers.Event;
 import simulator.queue.FifoQueue;
 import simulator.queue.QUEUE;
 import simulator.stream.*;
-
+/**
+ * 
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+ *
+ */
 public class MarketState extends State {
 	private QUEUE<Customer> checkoutQueue;
 	private CheckoutFactory checkouts;
