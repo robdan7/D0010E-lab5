@@ -94,7 +94,7 @@ public abstract class QUEUE<E> implements Iterable<E>{
 	
 	@Override
 	public Iterator<E> iterator() {
-		return new QueueIterator(null);
+		return new QueueIterator(this.iteratorObservable);
 	}
 	
 	/**
@@ -125,8 +125,8 @@ public abstract class QUEUE<E> implements Iterable<E>{
 		};
 		
 		@SuppressWarnings("deprecation")
-		protected QueueIterator(Observable o) {
-			iteratorObservable.addObserver(this.o);
+		protected QueueIterator(Observable observable) {
+			observable.addObserver(this.o);
 		}
 		
 		@Override
