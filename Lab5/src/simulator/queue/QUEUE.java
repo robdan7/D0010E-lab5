@@ -1,5 +1,10 @@
 package simulator.queue;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * This abstract class is a stencil for general queues.
  * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
@@ -8,6 +13,7 @@ package simulator.queue;
 public abstract class QUEUE<E> implements Iterable<E>{
 	private final Node<E> start;
 	private int size = 0;
+	private Observable iteratorObservable;
 
 	protected final Node<E> getFirst() {
 		return this.start;
@@ -17,8 +23,16 @@ public abstract class QUEUE<E> implements Iterable<E>{
 	 * Initiate the first node with a desired instance.
 	 * @param n - The node to store locally.
 	 */
+	@SuppressWarnings("deprecation")
 	public QUEUE(Node<E> n) {
 		this.start = n;
+		iteratorObservable = new Observable() {
+			@Override
+			public void notifyObservers() {
+				super.setChanged();
+				super.notifyObservers();
+			}
+		};
 	}
 
 	/**
@@ -77,4 +91,58 @@ public abstract class QUEUE<E> implements Iterable<E>{
 	
 	@Override
 	public abstract String toString();
+	
+	@Override
+	public Iterator<E> iterator() {
+		return new QueueIterator(null);
+	}
+	
+	/**
+	 * A node has been removed or added to this queue. this must be called in order
+	 * for iterators to work properly.
+	 */
+	protected final void change() {
+		this.iteratorObservable.notifyObservers();
+	}
+	
+	/**
+	 * Create an iterator for the queue. If the queue somehow is changed during an
+	 * iteration, the iteration is locked.
+	 * 
+	 * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
+	 *
+	 */
+	protected class QueueIterator implements Iterator<E> {
+		Node<E> node = getFirst();
+		private boolean changed;
+		
+		@SuppressWarnings("deprecation")
+		private Observer o = new Observer() {
+			@Override
+			public void update(Observable arg0, Object arg1) {
+				changed = true;
+			}
+		};
+		
+		@SuppressWarnings("deprecation")
+		protected QueueIterator(Observable o) {
+			iteratorObservable.addObserver(this.o);
+		}
+		
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public E next() {
+			if (this.changed || !this.hasNext()) {
+				throw new NoSuchElementException();
+			}
+			this.node = this.node.getNext();
+			return node.getItem();
+		}
+		
+	};
 }

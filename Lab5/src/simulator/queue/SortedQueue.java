@@ -14,19 +14,10 @@ import simulator.modifiers.Event;
  *
  */
 class SortedQueue<E extends SortedItem> extends QUEUE<E>{
-	Observable iteratorObservable;
 	
 	@SuppressWarnings("deprecation")
 	SortedQueue() {
 		super(new SortedNode<E>(null));
-		
-		iteratorObservable = new Observable() {
-			@Override
-			public void notifyObservers() {
-				this.setChanged();
-				super.notifyObservers();
-			}
-		};
 	}
 
 	@Override
@@ -49,11 +40,6 @@ class SortedQueue<E extends SortedItem> extends QUEUE<E>{
 		((SortedNode<E>)super.getFirst()).findLargerPriority(item).insertNext(new SortedNode<E>(item));
 		this.change();
 	}
-	
-	private void change() {
-		this.iteratorObservable.notifyObservers();
-	}
-
 
 	@Override
 	public String toString() {
@@ -61,34 +47,5 @@ class SortedQueue<E extends SortedItem> extends QUEUE<E>{
 			return "[]";
 		}
 		return "[" + super.getFirst().getNext().toString() + "]";
-	}
-
-	@Override
-	public Iterator<E> iterator() {
-		return new Iterator<E>() {
-			Node<E> node = getFirst();
-			private boolean changed;
-			Observer o = new Observer() {
-				@Override
-				public void update(Observable arg0, Object arg1) {
-					changed = true;
-				}
-			};
-			@Override
-			public boolean hasNext() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public E next() {
-				if (this.changed || !this.hasNext()) {
-					throw new NoSuchElementException();
-				}
-				this.node = this.node.getNext();
-				return node.getItem();
-			}
-			
-		};
 	}
 }
