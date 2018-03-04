@@ -14,9 +14,19 @@ import simulator.modifiers.Event;
  *
  */
 class SortedQueue<E extends SortedItem> extends QUEUE<E>{
+	Observable iteratorObservable;
 	
+	@SuppressWarnings("deprecation")
 	SortedQueue() {
 		super(new SortedNode<E>(null));
+		
+		iteratorObservable = new Observable() {
+			@Override
+			public void notifyObservers() {
+				this.setChanged();
+				super.notifyObservers();
+			}
+		};
 	}
 
 	@Override
@@ -41,7 +51,7 @@ class SortedQueue<E extends SortedItem> extends QUEUE<E>{
 	}
 	
 	private void change() {
-		
+		this.iteratorObservable.notifyObservers();
 	}
 
 
