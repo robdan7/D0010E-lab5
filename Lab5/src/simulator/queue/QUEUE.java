@@ -131,8 +131,7 @@ public abstract class QUEUE<E> implements Iterable<E>{
 		
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+			return node.hasNext();
 		}
 
 		@Override
