@@ -13,7 +13,7 @@ import simulator.queue.QUEUE;
  * This class represents a customer checkout. A checkout event is active as long
  * as there are more customers in the queue. The chekout will close if the queue is empty.
  * 
- * @author Robin
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
 public class CheckoutEvent extends MarketEvent {

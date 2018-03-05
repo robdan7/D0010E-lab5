@@ -11,7 +11,7 @@ import simulator.queue.QUEUE;
 
 /**
  * This class is a container for data passed between classes in the market program.
- * @author Robin
+ * @author Chonratid Pangdee, Anton Johansson, Robin Danielsson, Zerophymyr Falk
  *
  */
 public class DataPackage {
