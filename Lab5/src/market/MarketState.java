@@ -22,7 +22,7 @@ public class MarketState extends State {
 	private ExponentialRandomStream customerArrivalTime;
 	private UniformRandomStream checkoutTime;
 	private UniformRandomStream untilQueueTime;
-	private MarketEvent latestEvent = null;
+	private Event latestEvent = null;
 	private DataPackage data;
 	
 
@@ -44,7 +44,7 @@ public class MarketState extends State {
 	 * 
 	 * @param event - The event.
 	 */
-	public void notifyFromEvent(MarketEvent event) {
+	public void notifyFromEvent(Event event) {
 		this.latestEvent = event;
 		super.setChanged();
 		super.notifyObservers();
@@ -140,13 +140,13 @@ public class MarketState extends State {
 	public String toString() {
 		if (this.latestEvent == null) {
 			return "";
-		} else if (this.latestEvent.getCustomer() == null) {
+		} else if (!(this.latestEvent instanceof MarketEvent) || ((MarketEvent)this.latestEvent).getCustomer() == null) {
 			return String.format("%.2f", this.latestEvent.getTime()) + "\t" + 
 					this.latestEvent.toString();
 		}
 		return String.format("%.2f", this.latestEvent.getTime()) + "\t" + 
 		this.latestEvent.toString() + "   \t" + 
-		this.latestEvent.getCustomer().toString() + "\t" + 
+		((MarketEvent)this.latestEvent).getCustomer().toString() + "\t" + 
 		(this.isOpen ? "Ö":"S") + "\t" + 
 		this.checkouts.getClosedcheckouts() + "\t" +
 		String.format("%.2f",  this.getClosedCheckoutTime())+ "\t" +

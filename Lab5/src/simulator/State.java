@@ -53,4 +53,7 @@ public abstract class State extends Observable {
 
 	@Override
 	public abstract String toString();
+	
+	
+	public abstract void notifyFromEvent(Event event);
 }

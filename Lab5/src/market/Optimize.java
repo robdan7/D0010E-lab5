@@ -8,12 +8,12 @@ import java.util.Random;
  *
  */
 public class Optimize {
-	private int maxCustomers=5;
-	private double[] pickingTime= {0.5f,1f}, checkoutTime= {2f,3f}; 
-	private double arrivalTime=1;
-	private int numberOfCheckouts=2;
-	private double closingTime = 10;
-	private long seed=1234;
+	private int maxCustomers=100;
+	private double[] pickingTime= {0.45f,0.65f}, checkoutTime= {0.2f,0.3f}; 
+	private double arrivalTime=50;
+	private int numberOfCheckouts = 2;
+	private double closingTime = 20;
+	private long seed=42;
 	private DataPackage data;
 	
 	public void runOnce() {
@@ -75,10 +75,9 @@ public class Optimize {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("Test 1 time: " + new Optimize().runOptimized(1));
-		System.out.println("Test 5 times: " + new Optimize().runOptimized(5));
-		System.out.println("Test 10 times: " + new Optimize().runOptimized(10));
-		System.out.println("Test 100 times: " + new Optimize().runOptimized(100));
-		System.out.println("Test 500 times: " + new Optimize().runOptimized(500));
+		for (int i = 1; i <= 17; i++) {
+			System.out.println("Test " + i+ " time: " + new Optimize().runOptimized(i));
+		}
+		new Optimize().runOnce();
 	}
 }
